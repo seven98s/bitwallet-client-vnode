@@ -1,0 +1,16 @@
+$color_: #ff4201; // 全局颜色
+$padding_: 10rpx; //全局内边距
+$margin_: 10rpx; //全局外边距
+$radius_: 10rpx;
+$fontSize_: 32rpx;
+$fontColor: #ff4201;
+$background_: linear-gradient(360deg, #ff4201 0%, #ff7d51 100%);
+
+@mixin flex_content($flex, $name) {
+	display: $flex;
+	justify-content: $name;
+}
+
+@mixin flex($flex: flex) {
+	display: $flex;
+}

@@ -1,0 +1,580 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/node/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "节点",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/explore/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "探索",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/my/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"subPackages": [
+		{
+			"root": "pages/wallet",
+			"name": "钱包分包",
+			"pages": [
+				{
+					"path": "importWay",
+					"style": {
+						"navigationBarTitleText": "导入钱包",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "importMnemonic",
+					"style": {
+						"navigationBarTitleText": "助记词导入",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "importPrivateKey",
+					"style": {
+						"navigationBarTitleText": "私钥导入",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "importObserve",
+					"style": {
+						"navigationBarTitleText": "观察钱包导入",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "createWallet",
+					"style" : 
+					{
+						"navigationBarTitleText": "创建钱包",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "backupMnemonic",
+					"style" : 
+					{
+						"navigationBarTitleText": "备份助记词",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "backupTip",
+					"style" : 
+					{
+						"navigationBarTitleText": "备份钱包",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				
+				{
+					"path" : "verifyMnemonic",
+					"style" : 
+					{
+						"navigationBarTitleText": "验证助记词",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "collect",
+					"style" : 
+					{
+						"navigationBarTitleText": "收款",
+						"enablePullDownRefresh": false,
+						"navigationStyle": "custom"
+
+					}
+				},
+				{
+					"path" : "transfer/transferWay",
+					"style" : 
+					{
+						"navigationBarTitleText": "发送转账",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "transfer/transfer",
+					"style" : 
+					{
+						"navigationBarTitleText": "直接转账",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "transfer/transferMulti",
+					"style" : 
+					{
+						"navigationBarTitleText": "多签转账",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "transfer/multiRecord",
+					"style" : 
+					{
+						"navigationBarTitleText": "多签交易记录",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "detail",
+					"style" : 
+					{
+						"navigationBarTitleText": "钱包详情",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "tokenDetail",
+					"style" : 
+					{
+						"navigationBarTitleText": "Token详情",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "update",
+					"style" : 
+					{
+						"navigationBarTitleText": "修改名称",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "createWay",
+					"style" : 
+					{
+						"navigationBarTitleText": "创建方式",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "multiSignWallet",
+					"style" : 
+					{
+						"navigationBarTitleText": "多签钱包",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "multiSignWalletProcess",
+					"style" : 
+					{
+						"navigationBarTitleText": "创建多签钱包",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "toChainScan",
+					"style" : 
+					{
+						"navigationBarTitleText": "区块浏览器",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white"
+					}
+				},
+				{
+					"path" : "txDetail",
+					"style" : 
+					{
+						"navigationBarTitleText": "交易详情",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "addToken",
+					"style" : 
+					{
+						"navigationBarTitleText": "新增代币",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/my",
+			"name": "我的分包",
+			"pages": [
+				{
+					"path" : "addressBook/list",
+					"style" : 
+					{
+						"navigationBarTitleText": "地址本",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "addressBook/add",
+					"style" : 
+					{
+						"navigationBarTitleText": "添加地址",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "about",
+					"style" : 
+					{
+						"navigationBarTitleText": "关于我们",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "invite",
+					"style" : 
+					{
+						"navigationBarTitleText": "邀请好友",
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "#9c2821",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "setNode",
+					"style" : 
+					{
+						"navigationBarTitleText": "节点速度",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "manageWallet",
+					"style" : 
+					{
+						"navigationBarTitleText": "管理钱包",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "update",
+					"style" : 
+					{
+						"navigationBarTitleText": "修改密码",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "aboutWebView",
+					"style" : 
+					{
+						"navigationBarTitleText": "官方渠道",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white"
+					}
+				},
+				{
+					"path" : "redBook",
+					"style" : 
+					{
+						"navigationBarTitleText": "红皮书",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/node",
+			"name": "节点分包",
+			"pages": [
+				{
+					"path" : "operate/createNode",
+					"style" : 
+					{
+						"navigationBarTitleText": "创建节点",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/joinNodePage",
+					"style" : 
+					{
+						"navigationBarTitleText": "加入节点",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white"
+					}
+				},
+				{
+					"path" : "operate/joinNode",
+					"style" : 
+					{
+						"navigationBarTitleText": "加入节点",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white"
+					}
+				},
+				{
+					"path" : "operate/pledge/pledge",
+					"style" : 
+					{
+						"navigationBarTitleText": "质押",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/pledge/pledgePage",
+					"style" : 
+					{
+						"navigationBarTitleText": "个人总质押",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/vote/vote",
+					"style" : 
+					{
+						"navigationBarTitleText": "投票",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/proposal/page",
+					"style" : 
+					{
+						"navigationBarTitleText": "提案",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/nodePage",
+					"style" : 
+					{
+						"navigationBarTitleText": "全网总质押",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/vote/votePage",
+					"style" : 
+					{
+						"navigationBarTitleText": "个人总投票",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/withdraw/withdraw",
+					"style" : 
+					{
+						"navigationBarTitleText": "提取",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/proposal/create",
+					"style" : 
+					{
+						"navigationBarTitleText": "发起提案",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/proposal/my",
+					"style" : 
+					{
+						"navigationBarTitleText": "我的提案",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/proposal/detail",
+					"style" : 
+					{
+						"navigationBarTitleText": "提案详情",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "search",
+					"style" : 
+					{
+						"navigationBarTitleText": "搜索",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "operate/messageCenter",
+					"style" : 
+					{
+						"navigationBarTitleText": "消息中心",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom",
+						"enablePullDownRefresh": true
+					}
+				},
+				{
+					"path" : "operate/messageDetail",
+					"style" : 
+					{
+						"navigationBarTitleText":"",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white",
+						"navigationStyle": "custom"
+					}
+				}
+			
+			]
+		},
+		{
+			"root": "pages/explore",
+			"name": "探索分包",
+			"pages": [
+				{
+					"path": "dapp",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white"
+					}
+				},
+				{
+					"path" : "password",
+					"style" : 
+					{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false,
+						"navigationBarBackgroundColor": "white"
+					}
+				}
+			]
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"bounce": "none"
+	},
+	"tabBar": {
+		"color": "#000",
+		"selectedColor": "rgb(158, 41, 34)",
+		"backgroundColor": "white",
+		"borderStyle": "gray",
+		"list": [{
+				"text": "首页",
+				"pagePath": "pages/home/index",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/homeActive.png"
+			},{
+				"text": "节点",
+				"pagePath": "pages/node/index",
+				"iconPath": "static/tabbar/node.png",
+				"selectedIconPath": "static/tabbar/nodeActive.png"
+			},{
+				"text": "探索",
+				"pagePath": "pages/explore/index",
+				"iconPath": "static/tabbar/explore.png",
+				"selectedIconPath": "static/tabbar/exploreActive.png"
+			},{
+				"text": "我的",
+				"pagePath": "pages/my/index",
+				"iconPath": "static/tabbar/my.png",
+				"selectedIconPath": "static/tabbar/myActive.png"
+			}
+		]
+	}
+}

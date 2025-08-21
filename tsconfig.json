@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"useDefineForClassFields": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"strict": false,
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"jsx": "preserve",
+		"baseUrl": "./",
+		"paths": {
+			"@": ["src"],
+			"@/*": ["src/*"]
+		},
+		"lib": ["esnext", "dom"],
+		"types": ["@dcloudio/types", "node"],
+		"plugins": [
+			{
+				"name": "typescript-plugin-css-modules"
+			}
+		]
+	},
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./src/**/*"]
+}
