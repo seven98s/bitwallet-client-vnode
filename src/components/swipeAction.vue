@@ -1,107 +1,106 @@
 <template>
   <view class="swipe-delete-container" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
     <view class="content" :style="{ transform: `translateX(${translateX}px)` }" @click="onContentClick">
-      <slot></slot>
+      <slot ></slot>
     </view>
-    <view class="delete-btn" :style="{ transform: `translateX(${deleteBtnTranslateX}px)` }" @click.stop="handleDelete">
+    <view class="delete-btn" :style="{ transform: `translateX(${deleteBtnTranslateX}px)` }"
+          @click.stop="handleDelete">
       <image src="@/static/newUI3/transaction/delete.png" mode="aspectFill" class="deleteIcon"></image>
     </view>
   </view>
 </template>
 
-
-
-<script setup lang="ts">
-const props = defineProps({
-  threshold: {
-    type: Number,
-    default: 10
+<script>
+export default {
+  props: {
+    threshold: {
+      type: Number,
+      default: 10
+    },
+    maxTranslateX: {
+      type: Number,
+      default: -80
+    },
+    // 新增 disabled props
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   },
-  maxTranslateX: {
-    type: Number,
-    default: -80
+  data() {
+    return {
+      startX: 0,
+      translateX: 0,
+      showDeleteButton: false,
+      deleteBtnTranslateX: 80 // 删除按钮初始位置，完全隐藏
+    };
   },
-  // 新增 disabled props
-  disabled: {
-    type: Boolean,
-    default: false
-  }
-})
+  methods: {
+    touchStart(e) {
+      // 如果禁用，则不处理触摸事件
+      if (this.disabled) return;
+      this.startX = e.touches[0].clientX;
+      this.translateX = 0;
+      this.deleteBtnTranslateX = Math.abs(this.maxTranslateX); // 重置删除按钮的位置
+    },
+    touchMove(e) {
+      // 如果禁用，则不处理触摸事件
+      if (this.disabled) return;
+      const moveX = e.touches[0].clientX;
+      const deltaX = moveX - this.startX;
+      const newTranslateX = this.translateX + deltaX;
+      this.translateX = Math.max(Math.min(newTranslateX, 0), this.maxTranslateX);
+      this.startX = moveX;
 
-const startX = ref(0);
-const translateX = ref(0);
-const showDeleteButton = ref(false);
-const deleteBtnTranslateX = ref(Math.abs(props.maxTranslateX)); // 删除按钮初始位置
-
-const touchStart = (e: any) => {
-  if (props.disabled) return;
-  startX.value = e.touches[0].clientX;
-  translateX.value = 0;
-  deleteBtnTranslateX.value = Math.abs(props.maxTranslateX); // 重置删除按钮的位置
-}
-
-const touchMove = (e: any) => {
-  // 如果禁用，则不处理触摸事件
-  if (props.disabled) return;
-  const moveX = e.touches[0].clientX;
-  const deltaX = moveX - startX.value;
-  const newTranslateX = translateX.value + deltaX;
-  translateX.value = Math.max(Math.min(newTranslateX, 0), props.maxTranslateX);
-  startX.value = moveX;
-
-  // 根据 translateX 的值动态调整删除按钮的位置
-  deleteBtnTranslateX.value = Math.abs(props.maxTranslateX) + translateX.value;
-}
-const touchEnd = (e: any) => {
-  // 如果禁用，则不处理触摸事件
-  if (props.disabled) return;
-  if (translateX.value < -props.threshold) {
-    // 滑动距离超过阈值，显示删除按钮
-    showDeleteButton.value = true;
-    translateX.value = props.maxTranslateX;
-    deleteBtnTranslateX.value = 0; // 删除按钮完全显示
-  } else {
-    // 滑动距离未超过阈值，隐藏删除按钮
-    showDeleteButton.value = false;
-    translateX.value = 0;
-    deleteBtnTranslateX.value = Math.abs(props.maxTranslateX); // 删除按钮完全隐藏
-  }
-}
-
-const emit = defineEmits<{
-  (e: 'delete'): void;
-  (e: 'contentClick', event: Event): void;
-}>();
-
-const handleDelete = () => {
-  // 如果禁用，则不处理删除事件
-  if (props.disabled) return;
-  uni.showModal({
-    title: '确认删除',
-    content: '确定要删除该代币吗？',
-    success: (res) => {
-      if (res.confirm) {
-        // 用户点击了确认按钮，执行删除操作
-        showDeleteButton.value = false;
-        translateX.value = 0;
-        deleteBtnTranslateX.value = Math.abs(props.maxTranslateX); // 删除按钮完全隐藏
-        emit('delete'); // 触发自定义删除事件
-      } else if (res.cancel) {
-        // 用户点击了取消按钮，不执行删除操作
-        console.log('用户取消删除操作');
+      // 根据 translateX 的值动态调整删除按钮的位置
+      this.deleteBtnTranslateX = Math.abs(this.maxTranslateX) + this.translateX;
+    },
+    touchEnd(e) {
+      // 如果禁用，则不处理触摸事件
+      if (this.disabled) return;
+      if (this.translateX < -this.threshold) {
+        // 滑动距离超过阈值，显示删除按钮
+        this.showDeleteButton = true;
+        this.translateX = this.maxTranslateX;
+        this.deleteBtnTranslateX = 0; // 删除按钮完全显示
+      } else {
+        // 滑动距离未超过阈值，隐藏删除按钮
+        this.showDeleteButton = false;
+        this.translateX = 0;
+        this.deleteBtnTranslateX = Math.abs(this.maxTranslateX); // 删除按钮完全隐藏
       }
+    },
+    handleDelete() {
+      // 如果禁用，则不处理删除事件
+      if (this.disabled) return;
+      uni.showModal({
+        title: '确认删除',
+        content: '确定要删除该代币吗？',
+        success: (res) => {
+          if (res.confirm) {
+            // 用户点击了确认按钮，执行删除操作
+            this.showDeleteButton = false;
+            this.translateX = 0;
+            this.deleteBtnTranslateX = Math.abs(this.maxTranslateX); // 删除按钮完全隐藏
+            this.$emit('delete'); // 触发自定义删除事件
+          } else if (res.cancel) {
+            // 用户点击了取消按钮，不执行删除操作
+            console.log('用户取消删除操作');
+          }
+        }
+      });
+    },
+    onContentClick(e) {
+      if (this.showDeleteButton) {
+        // 如果删除按钮显示，阻止点击事件继续传播
+        e.stopPropagation();
+      }
+      this.$emit('contentClick', e);
     }
-  });
-}
-
-const onContentClick = (e) => {
-    if (showDeleteButton.value) {
-      // 如果删除按钮显示，阻止点击事件继续传播
-      e.stopPropagation();
-    }
-    emit('contentClick', e);
   }
+};
 </script>
+
 <style scoped>
 .swipe-delete-container {
   position: relative;

@@ -1,5 +1,5 @@
 <template>
-	<view class="home-page" :style="{ paddingTop: statusBarHeight + 'px'}">
+	<view class="home-page" :style="{ paddingTop: statusBarHeight + 'px' }">
 		<titleBar title='备份钱包'></titleBar>
 		<view class="tips">
 			请谨记以下安全要点
@@ -11,7 +11,7 @@
 			<view class="tipItem" v-for="(item, index) in tips" :key="index">
 				<image :src="item.icon" mode="aspectFill" class="tipIcon"></image>
 				<view class="tipInfo">
-						{{ item.describe }}
+					{{ item.describe }}
 				</view>
 			</view>
 		</view>
@@ -21,45 +21,40 @@
 	</view>
 </template>
 
-<script lang="ts">
-	import Vue from 'vue';
+<script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app';
+const tips = ref([
+	{
+		icon: require('@/static/newUI3/index/tip1.png'),
+		describe: '任何人，只要持有私钥、助记词，即可将资产转走',
+	},
+	{
+		icon: require('@/static/newUI3/index/tip2.png'),
+		describe: '钱包密码仅用于私钥的加密和解密，密码只存储在手机上，请做好密码备份',
+	},
+	{
+		icon: require('@/static/newUI3/index/tip3.png'),
+		describe: '请勿对私钥、助记词做截图备份，避免被恶意软件截取',
+	},
+	{
+		icon: require('@/static/newUI3/index/tip4.png'),
+		describe: '请正确抄写并保存在安全的地方，勿进行网络传输或存储',
+	},
+]);
 
-	export default Vue.extend({
-		data() {
-			return {
-				tips: [
-					{
-						icon: require('@/static/newUI3/index/tip1.png'),
-						describe: '任何人，只要持有私钥、助记词，即可将资产转走',
-					},
-					{
-						icon: require('@/static/newUI3/index/tip2.png'),
-						describe: '钱包密码仅用于私钥的加密和解密，密码只存储在手机上，请做好密码备份',
-					},
-					{
-						icon: require('@/static/newUI3/index/tip3.png'),
-						describe: '请勿对私钥、助记词做截图备份，避免被恶意软件截取',
-					},
-					{
-						icon: require('@/static/newUI3/index/tip4.png'),
-						describe: '请正确抄写并保存在安全的地方，勿进行网络传输或存储',
-					},
-				],
-				statusBarHeight: 0,
-			}
-		},
-		onLoad() {
-			const systemInfo = uni.getSystemInfoSync();
-			this.statusBarHeight = systemInfo.statusBarHeight! + 15;
-		},
-		methods: {
-			gotoPage(url : string) {
-				uni.navigateTo({
-					url
-				});
-			},
-		}
+const statusBarHeight = ref(0);
+
+onLoad(() => {
+	const systemInfo = uni.getSystemInfoSync();
+	statusBarHeight.value = systemInfo.statusBarHeight!;
+
+})
+
+const gotoPage(url: string) {
+	uni.navigateTo({
+		url
 	});
+}
 </script>
 
 <style lang="scss" scoped>
@@ -74,6 +69,7 @@
 	background-color: #fff;
 	background-size: 100% 100%;
 	box-sizing: border-box;
+
 	.tips {
 		margin-top: 54rpx;
 		display: flex;
@@ -86,6 +82,7 @@
 		font-size: 30rpx;
 		color: #231815;
 	}
+
 	.introduce {
 		display: flex;
 		justify-content: center;
@@ -95,13 +92,14 @@
 		height: 62rpx;
 		background: #F7F7F7;
 		border-radius: 12rpx;
-		
+
 		font-family: PingFang;
 		font-weight: bold;
 		font-size: 22rpx;
 		color: #9E2922;
 		line-height: 22rpx;
 	}
+
 	.tipList {
 		display: flex;
 		flex-direction: column;
@@ -111,12 +109,14 @@
 		margin-top: 71rpx;
 		padding: 0rpx 57rpx;
 		box-sizing: border-box;
+
 		// background-color: pink;
 		.tipItem {
 			display: flex;
 			align-items: center;
 			width: 100%;
 			height: 141rpx;
+
 			// ps
 			// background-color: skyblue;
 			.tipIcon {
@@ -125,6 +125,7 @@
 				height: 141rpx;
 				margin-right: 54rpx;
 			}
+
 			.tipInfo {
 				width: 396rpx;
 				font-family: PingFang;
@@ -135,6 +136,7 @@
 			}
 		}
 	}
+
 	.confirmButton {
 		margin-top: 200rpx;
 		display: flex;

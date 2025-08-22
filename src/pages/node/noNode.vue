@@ -96,6 +96,7 @@ import Vue from 'vue';
 import { BitInstance } from '@/chain/bit/instance';
 import { Witness } from 'bitweb-ts/lib/esm/types/Trx';
 import navigationBar from "@/components/navigationBar.vue"
+import { onLoad } from '@dcloudio/uni-app';
 
 const props = defineProps({
 	refresh: {
@@ -113,7 +114,7 @@ const numberArr = ref([])
 
 
 
-onMounted(async () => {
+onLoad(async () => {
 	await init();
 	const systemInfo = uni.getSystemInfoSync();
 	statusBarHeight.value = systemInfo.statusBarHeight!;

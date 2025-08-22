@@ -22,42 +22,39 @@
 <script>
 </script>
 
-<script lang="ts">
-  import Vue from 'vue';
+<script setup lang="ts">
+import { ref } from "vue";
+import { onLoad } from '@dcloudio/uni-app';
 
-	export default Vue.extend({
-		data() {
-			return {
-				importWays: [
-					{
-						icon: require('@/static/wallet/createWay/create.png'),
-						title: '创建钱包',
-						describe: '免费创建钱包',
-						gotoPage: './createWallet',
-					},
-					{
-						icon: require('@/static/wallet/createWay/multiSign.png'),
-						title: '多签钱包',
-						describe: '创建多签钱包需要支付链上矿工费',
-						gotoPage: './multiSignWalletProcess',
-					},
-				],
-				statusBarHeight:0,
-			}
-		},
-		onLoad() {
-			const systemInfo = uni.getSystemInfoSync();
-			this.statusBarHeight = systemInfo.statusBarHeight! + 15;
-		},
-		methods: {
-			gotoFun(page: string) {
-				uni.navigateTo({
-				  url: page
-				});
-			}
-		}
-	});
+const importWays = ref([
+  {
+    icon: require("@/static/wallet/createWay/create.png"),
+    title: "创建钱包",
+    describe: "免费创建钱包",
+    gotoPage: "./createWallet",
+  },
+  {
+    icon: require("@/static/wallet/createWay/multiSign.png"),
+    title: "多签钱包",
+    describe: "创建多签钱包需要支付链上矿工费",
+    gotoPage: "./multiSignWalletProcess",
+  },
+]);
+
+const statusBarHeight = ref(0);
+
+onLoad(() => {
+  const systemInfo = uni.getSystemInfoSync();
+  statusBarHeight.value = (systemInfo.statusBarHeight || 0) + 15;
+});
+
+const gotoFun = (page: string) => {
+  uni.navigateTo({
+    url: page,
+  });
+};
 </script>
+
 
 <style lang="scss" scoped>
 	.home-page {

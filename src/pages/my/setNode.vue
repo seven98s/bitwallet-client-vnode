@@ -69,81 +69,90 @@
 	</view>
 </template>
 
-<script lang="ts">
-	import Vue from 'vue';
-	import { NodeData } from '@/data/node/nodeData';
-	import { CHAIN_TYPE } from '@/data/constants';
+<script setup lang="ts">
+import { ref } from "vue";
+import { onLoad, onShow } from "@dcloudio/uni-app";
+import { NodeData } from "@/data/node/nodeData";
+import { CHAIN_TYPE } from "@/data/constants";
 
-	export default Vue.extend({
-		data() {
-			return {
-				nodes: new Array<{
-					name : string;
-					speed : number;
-					blockNum : number;
-					acitve : boolean;
-					storageNode : any;
-					nodeLocation:string;
-				}>(),
-				statusBarHeight: 0,
-			}
-		},
-		onLoad() {
-			const systemInfo = uni.getSystemInfoSync();
-			this.statusBarHeight = systemInfo.statusBarHeight! + 15;
-		},
-		async onShow() {
-			await this.load();
-		},
-		methods: {
-			async choose(param : any) {
-				NodeData.chooseNode(param);
-				await this.load();
-			},
-			async load() {
-				// query current choose
-				const currentNode : any = NodeData.node();
+// 节点类型
+interface NodeInfo {
+  name: string;
+  speed: number;
+  blockNum: number;
+  acitve: boolean;
+  storageNode: any;
+  nodeLocation: string;
+}
 
-				const nodes : any = NodeData.list();
-				// get block 
-				this.nodes = new Array<{
-					name : string;
-					speed : number;
-					blockNum : number;
-					acitve : boolean;
-					storageNode : any;
-					nodeLocation:string
-				}>();
-				nodes[CHAIN_TYPE.BIT].map(async (node : any) => {
-					const startTime = new Date().getTime();
-					const getBlockRs : any = await uni.request({
-						url: node.url + '/wallet/getblock'
-					})
-					const endTime = new Date().getTime();
-					const speed = endTime - startTime;
-					const blockNum = getBlockRs.data.block_header.raw_data.number;
-					this.nodes.push({
-						name: node.name,
-						speed,
-						blockNum,
-						acitve: currentNode.url == node.url,
-						storageNode: node,
-						nodeLocation:node.nodeLocation
-					});
-				});
-			},
-			gotoPage(url : string) {
-				uni.navigateTo({
-					url
-				});
-			},
-		}
-	});
+// 状态
+const nodes = ref<NodeInfo[]>([]);
+const statusBarHeight = ref(0);
+
+// 页面加载
+onLoad(() => {
+  const systemInfo = uni.getSystemInfoSync();
+  statusBarHeight.value = (systemInfo.statusBarHeight || 0) + 15;
+});
+
+// 页面显示
+onShow(async () => {
+  await load();
+});
+
+// 选择节点
+async function choose(param: any) {
+  NodeData.chooseNode(param);
+  await load();
+}
+
+// 加载节点数据（顺序请求）
+async function load() {
+  const currentNode: any = NodeData.node();
+  const nodes: any = NodeData.list();
+
+  nodes.value = [];
+
+  for (const node of nodes[CHAIN_TYPE.BIT]) {
+    const startTime = new Date().getTime();
+
+    try {
+      const getBlockRs: any = await uni.request({
+        url: node.url + "/wallet/getblock",
+      });
+      const endTime = new Date().getTime();
+      const speed = endTime - startTime;
+      const blockNum = getBlockRs.data.block_header.raw_data.number;
+
+      nodes.value.push({
+        name: node.name,
+        speed,
+        blockNum,
+        acitve: currentNode.url === node.url,
+        storageNode: node,
+        nodeLocation: node.nodeLocation,
+      } as NodeInfo);
+    } catch (err) {
+      nodes.value.push({
+        name: node.name,
+        speed: -1,
+        blockNum: -1,
+        acitve: currentNode.url === node.url,
+        storageNode: node,
+        nodeLocation: node.nodeLocation,
+      } as NodeInfo);
+    }
+  }
+}
+
+// 页面跳转
+function gotoPage(url: string) {
+  uni.navigateTo({ url });
+}
 </script>
 
-<style>
 
-</style>
+
 <style lang="scss" scoped>
 	.home-page {
 		display: flex;

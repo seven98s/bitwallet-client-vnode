@@ -42,14 +42,14 @@
 </template>
 
 <script setup lang="ts">
-
+import { onLoad } from '@dcloudio/uni-app';
 const statusBarHeight = ref(0);
 const isShowSelectLanguage = ref(false);
 
-const systemInfo = uni.getSystemInfoSync();
-statusBarHeight.value = systemInfo.statusBarHeight! + 15;
-
-
+onLoad(() => {
+  const systemInfo = uni.getSystemInfoSync();
+  statusBarHeight.value = (systemInfo.statusBarHeight || 0) + 15;
+});
 const gotoImport = () => {
 	uni.navigateTo({
 		url: '../wallet/importWay'

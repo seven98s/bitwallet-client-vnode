@@ -145,6 +145,7 @@
 
 <script setup lang="ts">
 import Vue from 'vue';
+import navigationBar from '@/components/navigationBar.vue';
 import WalletPopup from "@/components/walletPopup.vue";
 import Empty from "@/components/empty.vue";
 import swipeAction from '@/components/swipeAction.vue'
