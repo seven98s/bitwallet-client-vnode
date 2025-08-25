@@ -73,7 +73,7 @@ const fillChoose = (index: number) => {
   }
 };
 
-// 填充助记词----(此处有变动)
+// 填充助记词----(此处重新写了一下逻辑)
 const fill = (mnemonic: string) => {
   const temp = [...mnemonicsRes.value];
   temp[active.value] = mnemonic;

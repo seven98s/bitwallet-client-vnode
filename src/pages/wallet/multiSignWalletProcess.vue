@@ -21,50 +21,47 @@
 	</view>
 </template>
 
-<script lang="ts">
-	import Vue from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
 
-	export default Vue.extend({
-		data() {
-			return {
-				tips: [
-					{
-						icon: require('@/static/newUI3/index/process1.png'),
-						describe: '选择需要形成多签的钱包，然后点创建钱包-创建多签钱包',
-					},
-					{
-						icon: require('@/static/newUI3/index/process2.png'),
-						describe: '依次输入控制授权钱包地址',
-					},
-					{
-						icon: require('@/static/newUI3/index/process3.png'),
-						describe: '输入阈值(阈值代表需要多少数量的授权钱包确认)',
-					},
-					{
-						icon: require('@/static/newUI3/index/process4.png'),
-						describe: '确认形成多签的钱包中有足够的BIT作为GAS费，支付创建多签钱包的链上费用',
-					},
-					{
-						icon: require('@/static/newUI3/index/process5.png'),
-						describe: '创建成功，开始使用',
-					},
-				],
-				statusBarHeight: 0,
-			}
-		},
-		onLoad() {
-			const systemInfo = uni.getSystemInfoSync();
-			this.statusBarHeight = systemInfo.statusBarHeight! + 15;
-		},
-		methods: {
-			gotoPage(url : string) {
-				uni.navigateTo({
-					url
-				});
-			},
-		}
-	});
+
+
+const tips = ref([
+  {
+    icon: require('@/static/newUI3/index/process1.png'),
+    describe: '选择需要形成多签的钱包，然后点创建钱包-创建多签钱包',
+  },
+  {
+    icon: require('@/static/newUI3/index/process2.png'),
+    describe: '依次输入控制授权钱包地址',
+  },
+  {
+    icon: require('@/static/newUI3/index/process3.png'),
+    describe: '输入阈值(阈值代表需要多少数量的授权钱包确认)',
+  },
+  {
+    icon: require('@/static/newUI3/index/process4.png'),
+    describe: '确认形成多签的钱包中有足够的BIT作为GAS费，支付创建多签钱包的链上费用',
+  },
+  {
+    icon: require('@/static/newUI3/index/process5.png'),
+    describe: '创建成功，开始使用',
+  },
+])
+
+const statusBarHeight = ref(0)
+
+onLoad(() => {
+  const systemInfo = uni.getSystemInfoSync()
+  statusBarHeight.value = (systemInfo.statusBarHeight || 0) + 15
+})
+
+function gotoPage(url: string) {
+  uni.navigateTo({ url })
+}
 </script>
+
 
 <style lang="scss" scoped>
 .home-page {

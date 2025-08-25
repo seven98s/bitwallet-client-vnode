@@ -18,6 +18,10 @@ import { onLoad, onShow, onHide } from '@dcloudio/uni-app';
 import { useMessageStore } from '@/store/modules/Message';
 const MessageStore = useMessageStore();
 
+import { useHttp } from '@/composables/useHttp'
+
+const http = useHttp()
+
 const param = ref({
 	refresh: 0,
 	show: true,
@@ -79,7 +83,7 @@ const versionPopupshow = (show: boolean) => {
 // 获取消息列表
 const getMessageList = async () => {
 try {
-	const res = await (window as any).$http({
+	const res = await http({
 		url: "/app/announcement/page",
 		method: 'POST',
 		data: params

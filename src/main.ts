@@ -1,4 +1,4 @@
-// main.ts
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import { createPinia } from 'pinia'
@@ -27,7 +27,8 @@ app.component('titleBar', titleBar)
 
 // 挂载全局对象（提供/注入方式）
 app.provide('http', http)
-app.provide('PasswordPopup', PasswordPopup)
+// app.provide('PasswordPopup', PasswordPopup)
+
 
 
 

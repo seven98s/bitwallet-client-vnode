@@ -156,6 +156,10 @@ import { UniUtil } from "@/data/util/uniUtil";
 import { CheckUtil } from '@/data/util/checkUtil';
 import { RequestUtil } from '@/data/util/requestUtil';
 
+import { useHttp } from '@/composables/useHttp'
+
+const http = useHttp()
+
 const props = defineProps({
 	refresh: {
 		type: Number,
@@ -228,9 +232,10 @@ const init = async () => {
 
 
 
-const getAssetsTypeList = () => {
+
+const getAssetsTypeList = async () => {
 	try {
-		const res = (window as any).$http({
+		const res = await http({
 			url: "/app/moduleconfig/list",
 			method: 'POST',
 		})
@@ -348,9 +353,10 @@ const query = reactive<QueryParams>({
 
 const total = ref(0)
 
+
 const getAssets = async () => {
 	try {
-		const res = await (window as any).$http({
+		const res = await http({
 			url: "/app/accounttoken/page",
 			method: 'POST',
 			data: query
@@ -414,7 +420,7 @@ const assetsTypeList = ref<any[]>([]);
 
 const getAssets2 = async () => {
 	try {
-		const res = await (window as any).$http({
+		const res = await http({
 			url: "/app/moduletoken/page",
 			method: 'POST',
 			data: query
@@ -490,7 +496,7 @@ const handleDelete = (item: AssetItem) => {
 	if (item.tokenType == 'BIT') {
 		return UniUtil.toastError('BIT代币不能删除');
 	};
-	(window as any).$http({
+	http({
 		url: "/app/accounttoken/delete",
 		method: 'POST',
 		data: {
