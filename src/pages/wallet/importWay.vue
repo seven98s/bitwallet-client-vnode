@@ -1,68 +1,72 @@
 <template>
-	<view class="home-page" :style="{ paddingTop: statusBarHeight + 'px'}">
-		<titleBar title='导入钱包'></titleBar>
-		<view class="importWayList">
-			<view class="importWayItem" v-for="(item,index) in importWays" :key="index" @click="gotoFun(item.gotoPage)">
-				<image :src="item.icon" mode="widthFix" class="importWayIcon"></image>
-				<view class="importWayInfo">
-					<view class="importWayTitle">
-						{{ item.title }}
-					</view>
-					<view class="importWayIntroduce">
-						{{ item.describe }}
-					</view>
-				</view>
-				<image src="@/static/newUI3/index/rightArrow.png" mode="widthFix" class="rightArrow"></image>
-			</view>
-		</view>
-	</view>
+    <view class="home-page" :style="{ paddingTop: statusBarHeight + 'px' }">
+        <titleBar title='导入钱包'></titleBar>
+        <view class="importWayList">
+            <view class="importWayItem" v-for="(item, index) in importWays" :key="index"
+                @click="gotoFun(item.gotoPage)">
+                <image :src="item.icon" mode="widthFix" class="importWayIcon"></image>
+                <view class="importWayInfo">
+                    <view class="importWayTitle">
+                        {{ item.title }}
+                    </view>
+                    <view class="importWayIntroduce">
+                        {{ item.describe }}
+                    </view>
+                </view>
+                <image src="@/static/newUI3/index/rightArrow.png" mode="widthFix" class="rightArrow"></image>
+            </view>
+        </view>
+    </view>
 </template>
 
-<script>
-</script>
 
-<script lang="ts">
-	import Vue from 'vue';
+<script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app';
+import importMnemonic from '@/static/wallet/importWay/mnemonic.png'
+import importPrivateKey from '@/static/wallet/importWay/privateKey.png'
+import importObserve from '@/static/wallet/importWay/observe.png'
 
-	export default Vue.extend({
-		data() {
-			return {
-				importWays: [
-					{
-						icon: require('@/static/wallet/importWay/mnemonic.png'),
-						title: '助记词导入',
-						describe: '通过输入助记词或扫描二维码进行导入',
-						gotoPage: './importMnemonic',
-					},
-					{
-						icon: require('@/static/wallet/importWay/privateKey.png'),
-						title: '私钥导入',
-						describe: '通过输入明文私钥或扫描二维码进行导入',
-						gotoPage: './importPrivateKey',
-					},
-					{
-						icon: require('@/static/wallet/importWay/observe.png'),
-						title: '观察钱包导入',
-						describe: '无需导入私钥，输入账号或对应公钥即可导入',
-						gotoPage: './importObserve',
-					},
-				],
-				statusBarHeight: 0,
-			}
-		},
-		onLoad() {
-			const systemInfo = uni.getSystemInfoSync();
-			this.statusBarHeight = systemInfo.statusBarHeight! + 15;
-		},
-		methods: {
-			gotoFun(page : string) {
-				uni.navigateTo({
-					url: page
-				});
-			},
 
-		}
-	});
+
+
+
+
+const importWays = ref([
+    {
+
+        icon: importMnemonic,
+        title: '助记词导入',
+        describe: '通过输入助记词或扫描二维码进行导入',
+        gotoPage: './importMnemonic',
+    },
+    {
+       
+        icon: importPrivateKey,
+        title: '私钥导入',
+        describe: '通过输入明文私钥或扫描二维码进行导入',
+        gotoPage: './importPrivateKey',
+    },
+    {
+        icon: importObserve,
+        title: '观察钱包导入',
+        describe: '无需导入私钥，输入账号或对应公钥即可导入',
+        gotoPage: './importObserve',
+    },
+]);
+
+const statusBarHeight = ref(0);
+
+onLoad(() => {
+    const systemInfo = uni.getSystemInfoSync();
+    statusBarHeight.value = systemInfo.statusBarHeight! + 15;
+})
+
+const gotoFun = (page: string) => {
+    uni.navigateTo({
+        url: page
+    });
+}
+
 </script>
 
 <style lang="scss" scoped>

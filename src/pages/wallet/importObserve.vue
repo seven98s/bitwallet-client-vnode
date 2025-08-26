@@ -1,31 +1,31 @@
 <template>
-	<view class="home-page" :style="{ paddingTop: statusBarHeight + 'px'}">
-		<titleBar title='私钥导入' :isShowScanCode='true' @scanSuccess='scan'></titleBar>
-		<view class="tipWordsBox">
-			<textarea class="textarea" type="text" placeholder="请输入地址或扫描观察钱包二维码" v-model="param.importWallet.address"
-				placeholder-class="textareaFont" />
-		</view>
-		<view class="tips">
-			观察钱包不需要导入私钥，只导入地址，进行入场查看账号、交易记录和接收通知。
-		</view>
-		<view class="paramsList">
-			<view class="paramsItem">
-				<view class="paramsTitle">
-					钱包名称
-				</view>
-				<view class="paramsInputBox">
-					<input type="text" :placeholder="param.placeholderName" v-model="param.importWallet.name"
-						placeholder-class="textareaFont" />
-				</view>
-			</view>
-		</view>
-		<TermAndPrivacy :termPrivacyAgree="termPrivacyStatus" @termPrivacyAgree="handleTermPrivacyAgree">
-		</TermAndPrivacy>
-		<view class="confirmButton" @click="importWallet">
-			导入钱包
-		</view>
-	</view>
-	<!-- 	<view class="page">
+    <view class="home-page" :style="{ paddingTop: statusBarHeight + 'px' }">
+        <titleBar title='私钥导入' :isShowScanCode='true' @scanSuccess='scan'></titleBar>
+        <view class="tipWordsBox">
+            <textarea class="textarea" type="text" placeholder="请输入地址或扫描观察钱包二维码" v-model="param.importWallet.address"
+                placeholder-class="textareaFont" />
+        </view>
+        <view class="tips">
+            观察钱包不需要导入私钥，只导入地址，进行入场查看账号、交易记录和接收通知。
+        </view>
+        <view class="paramsList">
+            <view class="paramsItem">
+                <view class="paramsTitle">
+                    钱包名称
+                </view>
+                <view class="paramsInputBox">
+                    <input type="text" :placeholder="param.placeholderName" v-model="param.importWallet.name"
+                        placeholder-class="textareaFont" />
+                </view>
+            </view>
+        </view>
+        <TermAndPrivacy :termPrivacyAgree="termPrivacyStatus" @termPrivacyAgree="handleTermPrivacyAgree">
+        </TermAndPrivacy>
+        <view class="confirmButton" @click="importWallet">
+            导入钱包
+        </view>
+    </view>
+    <!-- 	<view class="page">
 		<view class="main">
 			<view class="mnemonic">
 				<textarea type="text" placeholder="请输入地址或扫描观察钱包二维码" v-model="param.importWallet.address" />
@@ -53,98 +53,98 @@
 	</view> -->
 </template>
 
-<script lang="ts">
-	import Vue from 'vue';
-	import TermAndPrivacy from "../../components/termAndPrivacy.vue";
-	import { ACCOUNT_TYPE, CHAIN_TYPE, STORAGE_TYPE } from '@/data/constants';
-	import { UniUtil } from "@/data/util/uniUtil";
-	import { CheckUtil } from '@/data/util/checkUtil';
-	import { WalletData } from '@/data/wallet/walletData';
+<script setup lang="ts">
+import Vue from 'vue';
+import TermAndPrivacy from "../../components/termAndPrivacy.vue";
+import { ACCOUNT_TYPE, CHAIN_TYPE, STORAGE_TYPE } from '@/data/constants';
+import { UniUtil } from "@/data/util/uniUtil";
+import { CheckUtil } from '@/data/util/checkUtil';
+import { WalletData } from '@/data/wallet/walletData';
+import { onLoad } from '@dcloudio/uni-app';
 
-	export default Vue.extend({
-		components: { TermAndPrivacy },
-		data() {
-			return {
-				termPrivacyStatus: false,
-				param: {
-					placeholderIndex: '1',
-					placeholderName: "",
-					importWallet: {
-						address: '',
-						name: '',
-					},
-				},
-				statusBarHeight: 0,
-			}
-		},
-		onLoad() {
-			const systemInfo = uni.getSystemInfoSync();
-			this.statusBarHeight = systemInfo.statusBarHeight! + 15;
-			// 钱包名称索引加载
-			const index = uni.getStorageSync(STORAGE_TYPE.WALLET_INDEX);
-			this.param.placeholderIndex = index === '' ? '1' : (parseInt(index) + 1).toString();
-			this.param.placeholderName = "WALLET-".concat(this.param.placeholderIndex);
-		},
-		methods: {
-			handleTermPrivacyAgree(value : boolean) {
-				this.termPrivacyStatus = value;
-			},
-			async importWallet() {
-				UniUtil.loadShow();
-				const { name, address } = this.param.importWallet;
-				let nameTmp = name;
-				if (CheckUtil.isStrEmpty(name)) {
-					nameTmp = this.param.placeholderName;
-				}
+const termPrivacyStatus = ref(false);
 
-				// check
-				if (CheckUtil.isStrEmptyAndMessage(nameTmp, "请输入钱包名称")) return;
-				if (CheckUtil.isStrEmptyAndMessage(address, "请输入钱包地址")) return;
-				if (!CheckUtil.checkAddressAndMessage(address)) return;
+const param = reactive({
+    placeholderIndex: '1',
+    placeholderName: "",
+    importWallet: {
+        address: '',
+        name: '',
+    },
+});
+const statusBarHeight = ref(0);
 
-				if (!this.termPrivacyStatus) {
-					UniUtil.toastError('请查看并同意条款');
-					return;
-				}
 
-				// import
-				try {
-					const account : Wallet.Account = {
-						name: nameTmp,
-						address: address,
-						secretInfo: {
-							mnemonic: '',
-							privateKey: '',
-							path: ''
-						},
-						type: ACCOUNT_TYPE.OBSERVE,
-					};
+onLoad(() => {
+    const systemInfo = uni.getSystemInfoSync();
+    statusBarHeight.value = (systemInfo.statusBarHeight || 0) + 15;
 
-					WalletData.import(CHAIN_TYPE.BIT, account, true);
+    // 钱包名称索引加载
+    const index = uni.getStorageSync(STORAGE_TYPE.WALLET_INDEX);
+    param.placeholderIndex = index === '' ? '1' : (parseInt(index) + 1).toString();
+    param.placeholderName = "WALLET-".concat(param.placeholderIndex);
 
-					// 缓存钱包index
-					uni.setStorageSync(STORAGE_TYPE.WALLET_INDEX, this.param.placeholderIndex);
+});
 
-					UniUtil.loadHide();
+const handleTermPrivacyAgree = (value: boolean) => {
+    termPrivacyStatus.value = value;
+};
 
-					UniUtil.toastSuccess('导入成功', () => {
-						setTimeout(() => {
-							uni.reLaunch({
-								url: '../home/index'
-							});
-						}, 200);
-					});
-				} catch (e : any) {
-					UniUtil.toastError(e.message);
-				}
+const importWallet = async () => {
+    UniUtil.loadShow();
+    const { name, address } = param.importWallet;
+    let nameTmp = name;
+    if (CheckUtil.isStrEmpty(name)) {
+        nameTmp = param.placeholderName;
+    }
 
-			},
-			scan(res : string) {
-				// console.log(res);
-				this.param.importWallet.address = res
-			}
-		}
-	});
+    // check
+    if (CheckUtil.isStrEmptyAndMessage(nameTmp, "请输入钱包名称")) return;
+    if (CheckUtil.isStrEmptyAndMessage(address, "请输入钱包地址")) return;
+    if (!CheckUtil.checkAddressAndMessage(address)) return;
+
+    if (!termPrivacyStatus.value) {
+        UniUtil.toastError('请查看并同意条款');
+        return;
+    }
+
+    // import
+    try {
+        const account: Wallet.Account = {
+            name: nameTmp,
+            address: address,
+            secretInfo: {
+                mnemonic: '',
+                privateKey: '',
+                path: ''
+            },
+            type: ACCOUNT_TYPE.OBSERVE,
+        };
+
+        WalletData.import(CHAIN_TYPE.BIT, account, true);
+
+        // 缓存钱包index
+        uni.setStorageSync(STORAGE_TYPE.WALLET_INDEX, param.placeholderIndex);
+
+        UniUtil.loadHide();
+
+        UniUtil.toastSuccess('导入成功', () => {
+            setTimeout(() => {
+                uni.reLaunch({
+                    url: '../home/index'
+                });
+            }, 200);
+        });
+    } catch (e: any) {
+        UniUtil.toastError(e.message);
+    }
+};
+
+const scan = (res: string) => {
+    param.importWallet.address = res
+}
+
+
 </script>
 
 <style lang="scss" scoped>

@@ -377,7 +377,6 @@ const changeSelectType = (type: string) => {
 };
 </script>
 
-</script>
 
 <style lang="scss" scoped>
 .home-page {

@@ -1,23 +1,8 @@
 <template>
-	<view class="page">
-		<PasswordPopup></PasswordPopup>
-	</view>
+	<view>my</view>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import PasswordPopup from "@/components/password/passwordPopup.vue";
-
-export default Vue.extend({
-	components: { PasswordPopup },
-	data() {
-		return {}
-	},
-	methods: {}
-});
+<script setup lang="ts">
 </script>
 
-<style lang="scss" scoped>
-	.page {
-	}
-</style>
+<style lang="scss" scoped></style>

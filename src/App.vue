@@ -1,9 +1,10 @@
+
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 import { NodeData } from './data/node/nodeData'
 import { STORAGE_TYPE, CHAIN_TYPE } from './data/constants'
 import { WalletData } from './data/wallet/walletData'
-
+// import PasswordPopup from '@/components/password/passwordPopup.vue'
 onLaunch(() => {
   console.log('App Launch')
   uni.hideTabBar()

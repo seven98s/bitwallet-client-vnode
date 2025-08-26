@@ -7,10 +7,20 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Empty: typeof import('./src/components/empty.vue')['default']
+    NavBar: typeof import('./src/components/navBar.vue')['default']
+    NavigationBar: typeof import('./src/components/navigationBar.vue')['default']
+    Network: typeof import('./src/components/Network.vue')['default']
+    Password: typeof import('./src/components/password/index.ts')['default']
+    PasswordPopup: typeof import('./src/components/password/passwordPopup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Tool: typeof import('./src/components/waterfall/tool.ts')['default']
-    Type: typeof import('./src/components/waterfall/type.ts')['default']
-    Waterfall: typeof import('./src/components/waterfall/waterfall.vue')['default']
+    SwipeAction: typeof import('./src/components/swipeAction.vue')['default']
+    TermAndPrivacy: typeof import('./src/components/termAndPrivacy.vue')['default']
+    TitleBar: typeof import('./src/components/titleBar.vue')['default']
+    TransferPopup: typeof import('./src/components/transferPopup.vue')['default']
+    VersionPopup: typeof import('./src/components/versionPopup.vue')['default']
+    WalletPopup: typeof import('./src/components/walletPopup.vue')['default']
+    WalletTabbar: typeof import('./src/components/walletTabbar.vue')['default']
   }
 }

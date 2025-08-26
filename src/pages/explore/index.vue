@@ -107,6 +107,8 @@ const show = ref({
 
 const statusBarHeight = ref(0);
 const imageList = ref([]);
+
+
 const myDappList = ref([]);
 const params = ref({
 	pageNow: 1,

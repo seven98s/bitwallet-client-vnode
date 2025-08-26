@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+
 
 // 从缓存中读取数据----方法封装
 const getStorage = (key: string) => {
@@ -8,7 +8,7 @@ const getStorage = (key: string) => {
 };
 
 const setStorage = (key: string, value: any) => {
-  uni.setStorageSync(key, JSON.stringify(value));
+    uni.setStorageSync(key, JSON.stringify(value));
 };
 
 // 定义类型接口
@@ -86,6 +86,6 @@ export const useMessageStore = defineStore('message', () => {
         changePasswordPopShow,
         updateNewMessageId,
         updateReadyMessageId,
-        updateHasNewMessage
+        updateHasNewMessage,
     };
 });

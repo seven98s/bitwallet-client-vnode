@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 	<view class="transferPopup" v-if="show">
 		<view class="mask" @click="close"></view>
 		<view class="container">
@@ -335,4 +335,4 @@
 			}
 		}
 	}
-</style>
+</style> -->

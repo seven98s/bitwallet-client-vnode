@@ -15,7 +15,7 @@
 			"@/*": ["src/*"]
 		},
 		"lib": ["esnext", "dom"],
-		"types": ["@dcloudio/types", "node"],
+		"types": ["@dcloudio/types", "node", "vite/client","vue"],
 		"plugins": [
 			{
 				"name": "typescript-plugin-css-modules"
@@ -24,3 +24,28 @@
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./src/**/*"]
 }
+
+
+// {
+// 	"compilerOptions": {
+// 	  "target": "ESNext",
+// 	  "useDefineForClassFields": true,
+// 	  "module": "ESNext",
+// 	  "moduleResolution": "Node",
+// 	  "strict": true,
+// 	  "jsx": "preserve",
+// 	  "resolveJsonModule": true,
+// 	  "isolatedModules": true,
+// 	  "esModuleInterop": true,
+// 	  "lib": ["ESNext", "DOM"],
+// 	  "skipLibCheck": true,
+// 	  "forceConsistentCasingInFileNames": true,
+// 	  "baseUrl": "./",
+// 	  "paths": {
+// 		"@/*": ["src/*"]
+// 	  },
+// 	  "types": ["vite/client", "uni-app"]
+// 	},
+// 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+//   }
+  

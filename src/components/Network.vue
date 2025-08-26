@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 	<view class="page">
 		
 	</view>
@@ -23,4 +23,4 @@
 </script>
 
 <style lang="scss" scoped>
-</style>
+</style> -->

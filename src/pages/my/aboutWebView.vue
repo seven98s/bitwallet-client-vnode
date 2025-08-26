@@ -1,25 +1,8 @@
 <template>
-	<view class="page">
-		<web-view :src="param.url"></web-view>
-	</view>
+	<view>my</view>
 </template>
 
-<script lang="ts">
-  import Vue from 'vue';
-
-	export default Vue.extend({
-		data() {
-			return {
-				param: {
-					url: '',
-				}
-			}
-		},
-		onLoad(query: any) {
-			this.param.url = query.url;
-		}
-	});
+<script setup lang="ts">
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

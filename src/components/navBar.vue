@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 	<view class="navBarComponent">
 		<view class="left">
 			<i class="icon" @click="gotoPage($props.backUrl)"></i>
@@ -74,4 +74,4 @@
 			font-size: 38rpx;
 		}
 	}
-</style>
+</style> -->

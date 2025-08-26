@@ -43,7 +43,6 @@
 
 <script setup lang="ts">
 import { UniUtil } from "@/data/util/uniUtil";
-import { ref, defineProps } from "vue";
 import { useMessageStore } from '@/store/modules/Message';
 const MessageStore = useMessageStore();
 

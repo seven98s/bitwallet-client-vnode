@@ -8,6 +8,8 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import uni from '@dcloudio/vite-plugin-uni';
 
+import path from 'path'
+
 export default (): UserConfig => {
 	return {
 		base: '/',
@@ -35,6 +37,12 @@ export default (): UserConfig => {
 				},
 			}),
 		],
+
+		resolve: {
+			alias: {
+			  '@': path.resolve(__dirname, './src')
+			}
+		  },
 		// server: {
 		// 	open: false,
 		// 	// 端口号
@@ -55,15 +63,21 @@ export default (): UserConfig => {
 				},
 			},
 		},
-		build: {
-			minify: 'terser',
-			terserOptions: {
-				compress: {
-					// 生产环境去除log语句和DBUG
-					drop_console: true,
-					drop_debugger: true,
-				},
-			},
-		},
+	// 	build: {
+	// 		minify: 'terser',
+	// 		terserOptions: {
+	// 			compress: {
+	// 				// 生产环境去除log语句和DBUG
+	// 				drop_console: true,
+	// 				drop_debugger: true,
+	// 			},
+	// 		},
+	// 	},
+	
+	// build: {
+	// 	rollupOptions: {
+	// 	  external: ['crypto-js'], // 外部化该模块
+	// 	},
+	//   },
 	};
 };

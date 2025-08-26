@@ -1,165 +1,169 @@
 <template>
-	<view class="home-page" :style="{ paddingTop: statusBarHeight + 'px'}">
-		<titleBar title='私钥导入' :isShowScanCode='true' @scanSuccess='scan'></titleBar>
-		<view class="tipWordsBox">
-			<textarea class="textarea" type="text"placeholder="输入明文私钥或二维码,请注意大小写" v-model="param.importWallet.privateKey"
-				placeholder-class="textareaFont" />
-		</view>
-		<view class="paramsList">
-			<view class="paramsItem">
-				<view class="paramsTitle">
-					钱包名称
-				</view>
-				<view class="paramsInputBox">
-					<input type="text" :placeholder="param.placeholderName" v-model="param.importWallet.name"
-						placeholder-class="textareaFont" />
-				</view>
-			</view>
-			<view class="paramsItem" v-if="param.isExistsWallet">
-				<view class="paramsTitle">
-					钱包密码
-				</view>
-				<view class="paramsInputBox">
-					<input type="password" placeholder="请输入密码,至少8位数" v-model="param.importWallet.password"
-						placeholder-class="textareaFont" />
-				</view>
-				<view class="paramsInputBox">
-					<input type="password" placeholder="重复密码" v-model="param.importWallet.rePassword"
-						placeholder-class="textareaFont" />
-				</view>
-			</view>
-	
-			<view class="paramsItem" v-if="param.isExistsWallet">
-				<view class="paramsTitle">
-					提示信息(选填)
-				</view>
-				<view class="paramsInputBox">
-					<input type="text" placeholder="密码提示信息" v-model="param.importWallet.tips"
-						placeholder-class="textareaFont" />
-				</view>
-			</view>
-		</view>
-		<TermAndPrivacy :termPrivacyAgree="termPrivacyStatus" @termPrivacyAgree="handleTermPrivacyAgree">
-		</TermAndPrivacy>
-		<view class="confirmButton" @click="importWallet">
-			导入钱包
-		</view>
-	</view>
-	
+    <view class="home-page" :style="{ paddingTop: statusBarHeight + 'px' }">
+        <titleBar title='私钥导入' :isShowScanCode='true' @scanSuccess='scan'></titleBar>
+        <view class="tipWordsBox">
+            <textarea class="textarea" type="text" placeholder="输入明文私钥或二维码,请注意大小写"
+                v-model="param.importWallet.privateKey" placeholder-class="textareaFont" />
+        </view>
+        <view class="paramsList">
+            <view class="paramsItem">
+                <view class="paramsTitle">
+                    钱包名称
+                </view>
+                <view class="paramsInputBox">
+                    <input type="text" :placeholder="param.placeholderName" v-model="param.importWallet.name"
+                        placeholder-class="textareaFont" />
+                </view>
+            </view>
+            <view class="paramsItem" v-if="param.isExistsWallet">
+                <view class="paramsTitle">
+                    钱包密码
+                </view>
+                <view class="paramsInputBox">
+                    <input type="password" placeholder="请输入密码,至少8位数" v-model="param.importWallet.password"
+                        placeholder-class="textareaFont" />
+                </view>
+                <view class="paramsInputBox">
+                    <input type="password" placeholder="重复密码" v-model="param.importWallet.rePassword"
+                        placeholder-class="textareaFont" />
+                </view>
+            </view>
+
+            <view class="paramsItem" v-if="param.isExistsWallet">
+                <view class="paramsTitle">
+                    提示信息(选填)
+                </view>
+                <view class="paramsInputBox">
+                    <input type="text" placeholder="密码提示信息" v-model="param.importWallet.tips"
+                        placeholder-class="textareaFont" />
+                </view>
+            </view>
+        </view>
+        <TermAndPrivacy :termPrivacyAgree="termPrivacyStatus" @termPrivacyAgree="handleTermPrivacyAgree">
+        </TermAndPrivacy>
+        <view class="confirmButton" @click="importWallet">
+            导入钱包
+        </view>
+    </view>
+
 </template>
 
-<script lang="ts">
-	import Vue from 'vue';
-	import TermAndPrivacy from "../../components/termAndPrivacy.vue";
-	import { ACCOUNT_TYPE, CHAIN_TYPE, STORAGE_TYPE } from '@/data/constants';
-	import { UniUtil } from "@/data/util/uniUtil";
-	import { CheckUtil } from '@/data/util/checkUtil';
-	import { BitAccount } from '@/chain/bit/account/account';
-	import { WalletData } from '@/data/wallet/walletData';
+<script setup lang="ts">
+import Vue from 'vue';
+import TermAndPrivacy from "../../components/termAndPrivacy.vue";
+import { ACCOUNT_TYPE, CHAIN_TYPE, STORAGE_TYPE } from '@/data/constants';
+import { UniUtil } from "@/data/util/uniUtil";
+import { CheckUtil } from '@/data/util/checkUtil';
+import { BitAccount } from '@/chain/bit/account/account';
+import { WalletData } from '@/data/wallet/walletData';
+import { onLoad } from '@dcloudio/uni-app';
 
-	export default Vue.extend({
-		components: { TermAndPrivacy },
-		data() {
-			return {
-				termPrivacyStatus: false,
-				param: {
-					isExistsWallet: false,
-					placeholderIndex: '1',
-					placeholderName: "",
-					importWallet: {
-						privateKey: "",
-						name: "",
-						password: "",
-						rePassword: "",
-						tips: "",
-					}
-				},
-				statusBarHeight:0,
-			}
-		},
-		onLoad() {
-			const systemInfo = uni.getSystemInfoSync();
-			this.statusBarHeight = systemInfo.statusBarHeight! + 15;
-			// 钱包名称索引加载
-			const index = uni.getStorageSync(STORAGE_TYPE.WALLET_INDEX);
-			this.param.placeholderIndex = index === '' ? '1' : (parseInt(index)+1).toString();
-			this.param.placeholderName = "WALLET-".concat(this.param.placeholderIndex);
-			
-			// 是否需要输入密码
-			this.param.isExistsWallet = WalletData.account.address === undefined;
-		},
-		methods: {
-			handleTermPrivacyAgree(value: boolean) {
-				this.termPrivacyStatus = value;
-			},
-			async importWallet() {
-				UniUtil.loadShow();
-				const { privateKey, name, password, rePassword, tips } = this.param.importWallet;
-				let nameTmp = name;
-				if(CheckUtil.isStrEmpty(name)) {
-					nameTmp = this.param.placeholderName;
-				}
-				
-				// check
-				if(CheckUtil.isStrEmptyAndMessage(privateKey, "请输入私钥")) return;
-				if(CheckUtil.isStrEmptyAndMessage(nameTmp, "请输入钱包名称")) return;
-				if(this.param.isExistsWallet && CheckUtil.isStrEmptyAndMessage(password, "请输入钱包密码")) return;
-				if(this.param.isExistsWallet && !CheckUtil.lengthRangeEqAndMessage(password, "密码至少需要8位数", 8)) return;
-				if(this.param.isExistsWallet && CheckUtil.isStrEmptyAndMessage(rePassword, "请输入钱包重复密码")) return;
-				if(!CheckUtil.isStrSameAndMessage(password, rePassword, "密码不一致")) return;
-				
-				if(!this.termPrivacyStatus) {
-					UniUtil.toastError('请查看并同意条款');
-					return;
-				}
-				
-				// import
-				const importParam: WalletBit.Account.ImportPrivateKeyDto = {
-					privateKey
-				}
-				await BitAccount.importPrivateKey(importParam).then(data => {
-					const account: Wallet.Account = {
-						name: nameTmp,
-						address: data.address,
-						secretInfo: {
-							mnemonic: '',
-							privateKey: data.privateKey,
-							path: ''
-						},
-						type: ACCOUNT_TYPE.IMPORT,
-					};
-					const user: Wallet.UserInfo = { password, tips };
-					
-					WalletData.import(CHAIN_TYPE.BIT, account, false, user);
-					
-					// 缓存钱包index
-					uni.setStorageSync(STORAGE_TYPE.WALLET_INDEX, this.param.placeholderIndex);
-					
-					UniUtil.loadHide();
-					
-					UniUtil.toastSuccess('导入成功', () => {
-						setTimeout(() => {
-							uni.reLaunch({
-								url: '../home/index'
-							});
-						}, 200);
-					});
-				}).catch(e => {
-					console.log(e);
-					if(e.message.startsWith('error')) {
-						UniUtil.toastError('私钥不匹配，请重新输入');
-					} else {
-						UniUtil.toastError(e.message);
-					}
-				});
-				
-			},
-			scan(res:string) {
-				// console.log(res);
-				this.param.importWallet.privateKey=res
-			}
-		}
-	});
+const termPrivacyStatus = ref(false);
+
+const param = reactive({
+    isExistsWallet: false,
+    placeholderIndex: '1',
+    placeholderName: "",
+    importWallet: {
+        privateKey: "",
+        name: "",
+        password: "",
+        rePassword: "",
+        tips: "",
+    }
+});
+const statusBarHeight = ref(0);
+
+
+onLoad(() => {
+    const systemInfo = uni.getSystemInfoSync();
+    statusBarHeight.value = (systemInfo.statusBarHeight || 0) + 15;
+
+    // 钱包名称索引加载
+    const index = uni.getStorageSync(STORAGE_TYPE.WALLET_INDEX);
+    param.placeholderIndex = index === '' ? '1' : (parseInt(index) + 1).toString();
+    param.placeholderName = "WALLET-".concat(param.placeholderIndex);
+
+    // 是否需要输入密码
+    param.isExistsWallet = WalletData.account.address === undefined;
+
+});
+
+
+const handleTermPrivacyAgree = (value: boolean) => {
+    termPrivacyStatus.value = value;
+};
+
+const importWallet = async () => {
+
+    UniUtil.loadShow();
+    const { privateKey, name, password, rePassword, tips } = param.importWallet;
+    let nameTmp = name;
+    if (CheckUtil.isStrEmpty(name)) {
+        nameTmp = param.placeholderName;
+    }
+
+    // check
+    if (CheckUtil.isStrEmptyAndMessage(privateKey, "请输入私钥")) return;
+    if (CheckUtil.isStrEmptyAndMessage(nameTmp, "请输入钱包名称")) return;
+    if (param.isExistsWallet && CheckUtil.isStrEmptyAndMessage(password, "请输入钱包密码")) return;
+    if (param.isExistsWallet && !CheckUtil.lengthRangeEqAndMessage(password, "密码至少需要8位数", 8)) return;
+    if (param.isExistsWallet && CheckUtil.isStrEmptyAndMessage(rePassword, "请输入钱包重复密码")) return;
+    if (!CheckUtil.isStrSameAndMessage(password, rePassword, "密码不一致")) return;
+
+    if (!termPrivacyStatus.value) {
+        UniUtil.toastError('请查看并同意条款');
+        return;
+    }
+
+    // import
+    const importParam: WalletBit.Account.ImportPrivateKeyDto = {
+        privateKey
+    }
+
+    try {
+        const data = await BitAccount.importPrivateKey(importParam);
+        const account: Wallet.Account = {
+            name: nameTmp,
+            address: data.address,
+            secretInfo: {
+                mnemonic: '',
+                privateKey: data.privateKey,
+                path: ''
+            },
+            type: ACCOUNT_TYPE.IMPORT,
+        };
+        const user: Wallet.UserInfo = { password, tips };
+
+        WalletData.import(CHAIN_TYPE.BIT, account, false, user);
+
+        // 缓存钱包index
+        uni.setStorageSync(STORAGE_TYPE.WALLET_INDEX, param.placeholderIndex);
+
+        UniUtil.loadHide();
+
+        UniUtil.toastSuccess('导入成功', () => {
+            setTimeout(() => {
+                uni.reLaunch({
+                    url: '../home/index'
+                });
+            }, 200);
+        });
+    } catch (e) {
+        console.log(e);
+        if (e.message.startsWith('error')) {
+            UniUtil.toastError('私钥不匹配，请重新输入');
+        } else {
+            UniUtil.toastError(e.message);
+        }
+    }
+};
+
+const scan = (res:string) => {
+    param.importWallet.privateKey = res
+}
+
+
 </script>
 
 <style lang="scss" scoped>

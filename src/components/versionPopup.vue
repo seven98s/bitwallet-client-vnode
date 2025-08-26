@@ -152,7 +152,7 @@ const confirm = async () => {
 
 watch(
 	() => props.refresh,
-	async (newval) => {
+	async (newval:any) => {
 		if (newval !== -1) {
 			await init()
 		}

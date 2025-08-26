@@ -1,30 +1,24 @@
-import Vue from 'vue';
+// src/components/password/index.ts
+import { useMessageStore } from '@/store/modules/Message'
 
-const PasswordPopup = function(options = {}) {
-	console.log(options)
-	Vue.prototype.$store.commit('changePasswordPopConfig', options)
-	console.log(Vue.prototype.$store.state.passwordPopConfig.show)
-	// return new Promise<string>((resolve,reject)=>{
-		// uni.navigateTo({  
-		// 	url: '/components/password/passwordPopup'
-		// });
-		
-		//  // #ifdef H5  
-		// let MessageConstructor = Vue.extend(Message)
-		// let instance = new MessageConstructor({
-		// 	data: options,
-		// 	methods: {
-		// 		confirm(value: string) {
-		// 			console.log(value);
-		// 			resolve(value);
-		// 		}
-		// 	}
-		// })
-		
-		// document.body.appendChild(instance.$mount().$el);
-		// // #endif  
-	// })
+export interface PasswordPopupOptions {
+  show?: boolean
+  title?: string
+  password?: string
+  confirm?: (password: string) => void
+}
+
+export function passwordPopup(options: PasswordPopupOptions = {}) {
+  const store = useMessageStore()
+
+  // 打开弹窗 & 写入基础配置
+  store.changePasswordPopConfig({
+    show: options.show ?? true,
+    title: options.title ?? '',
+    password: options.password ?? ''
+  })
+
 
 }
 
-export default PasswordPopup;
+

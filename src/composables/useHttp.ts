@@ -1,5 +1,5 @@
-// src/composables/useHttp.ts
-import { inject } from 'vue'
+
+
 import type { http as HttpType } from '@/utils/http'
 
 export function useHttp() {

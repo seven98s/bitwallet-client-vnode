@@ -105,5 +105,5 @@
     "mp-qq" : {
         "usingComponents" : true
     },
-    "vueVersion" : "2"
+    "vueVersion" : "3"
 }

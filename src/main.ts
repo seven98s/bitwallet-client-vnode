@@ -6,7 +6,6 @@ import './uni.promisify.adaptor'
 
 // 工具
 import { http } from '@/utils/http'
-
 // 全局组件
 import PasswordPopup from '@/components/password/index.vue'
 import walletTabbar from '@/components/walletTabbar.vue'
@@ -30,7 +29,7 @@ app.provide('http', http)
 // app.provide('PasswordPopup', PasswordPopup)
 
 
-
+// app.config.globalProperties.$PasswordPopup = PasswordPopup
 
 // 挂载应用
 app.mount('#app')
