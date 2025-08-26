@@ -72,11 +72,6 @@ const version = ref({
 	showDownLine: false,
 	downloadNum: '',
 })
-
-onMounted(async () => {
-	await init();
-})
-
 const init = async () => {
 	await VersionData.load().then((rs: any) => {
 		const { version, describe, forceUpdate, apkUrl, apkSize } = rs;
@@ -87,6 +82,11 @@ const init = async () => {
 		version.apkSize = apkSize * 1024;
 	})
 }
+
+onMounted(async () => {
+	await init();
+})
+
 
 const emit = defineEmits(['versionPopupshow'])
 const close = () => {

@@ -121,7 +121,7 @@
 					<!-- 资产类型，并且不为观察钱包才能删除 -->
 					<view class="assetsItem" @click="gotoPage('/pages/wallet/addToken')"
 						v-if="param.assetActive === 'asset' && wallet.type !== 2">
-						<image :src="require('@/static/newUI3/index/add.png')" mode="widthFix" class="assetsIcon">
+						<image :src=add mode="widthFix" class="assetsIcon">
 						</image>
 						<view class="accetsName">
 							添加新代币
@@ -156,6 +156,14 @@ import { UniUtil } from "@/data/util/uniUtil";
 import { CheckUtil } from '@/data/util/checkUtil';
 import { RequestUtil } from '@/data/util/requestUtil';
 
+
+import add from "@/static/newUI3/index/add.png";
+import joinNode from "@/static/newUI3/index/joinNode.png";
+import dappBrowser from "@/static/newUI3/index/dappBrowser.png";
+import incubate from '@/static/newUI3/index/incubate.png';
+import transferAccounts from "@/static/newUI3/index/transferAccounts.png"
+
+
 import { useHttp } from '@/composables/useHttp'
 
 const http = useHttp()
@@ -176,10 +184,10 @@ const bitPrice = ref('');
 
 onMounted(async () => {
 	dappList.value = [
-		{ dappName: "参与节点", icon: require('@/static/newUI3/index/joinNode.png'), jumpType: 0, jumpUrl: '/pages/node/index' },
-		{ dappName: "DApp浏览器", icon: require('@/static/newUI3/index/dappBrowser.png'), jumpType: 0, jumpUrl: '/pages/explore/index' },
-		{ dappName: "一键孵化", icon: require('@/static/newUI3/index/incubate.png'), jumpType: 1, jumpUrl: '' },
-		{ dappName: "跨链转币", icon: require('@/static/newUI3/index/transferAccounts.png'), jumpType: 1, jumpUrl: 'http://crosschain.bitnetworkbc.com' },
+		{ dappName: "参与节点", icon: joinNode, jumpType: 0, jumpUrl: '/pages/node/index' },
+		{ dappName: "DApp浏览器", icon: dappBrowser, jumpType: 0, jumpUrl: '/pages/explore/index' },
+		{ dappName: "一键孵化", icon: incubate, jumpType: 1, jumpUrl: '' },
+		{ dappName: "跨链转币", icon: transferAccounts, jumpType: 1, jumpUrl: 'http://crosschain.bitnetworkbc.com' },
 	];
 
 	// 设置账户地址
@@ -520,8 +528,9 @@ const handleContentClick = (item: AssetItem, e: any) => {
 
 };
 
+import bit from "@/static/token/icon/bit.png"
 const handleImageError = (index: number) => {
-	showAssets[index].icon = require('@/static/token/icon/bit.png');
+	showAssets[index].icon = bit;
 }
 
 const walletPopupshow = (show: boolean) => {

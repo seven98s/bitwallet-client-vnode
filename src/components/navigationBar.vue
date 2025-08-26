@@ -9,20 +9,20 @@
 			</view>
 		</view>
 		<view class="searchBox">
-			<image v-if="isHome" src="@/static/newUI3/index/searchIcon.png" mode="scaleToFill" class="searchIcon">
+			<image v-if="props.isHome" src="@/static/newUI3/index/searchIcon.png" mode="scaleToFill" class="searchIcon">
 			</image>
 			<image v-else src="@/static/newUI3/node/searchIcon.png" mode="scaleToFill" class="searchIcon"></image>
 			<input :placeholder="searchKeyWord" placeholder-class="searchText" @blur="confirm" v-model='url' disabled />
 
 		</view>
 		<view class="methodsBox">
-			<image v-if="isHome" src="@/static/newUI3/index/customerService.png" mode="heightFix" class="methodsIcon"
+			<image v-if="props.isHome" src="@/static/newUI3/index/customerService.png" mode="heightFix" class="methodsIcon"
 				@click="gotoPage('/pages/my/about')"></image>
 
 			<image v-else src="@/static/newUI3/node/customerService.png" mode="heightFix" class="methodsIcon"
 				@click="gotoPage('/pages/my/about')"></image>
 
-			<image v-if="isHome" src="@/static/newUI3/index/scanCode.png" mode="heightFix" class="methodsIcon"
+			<image v-if="props.isHome" src="@/static/newUI3/index/scanCode.png" mode="heightFix" class="methodsIcon"
 				@click="scan"></image>
 			<image v-else src="@/static/newUI3/node/scanCode.png" mode="heightFix" class="methodsIcon" @click="scan"></image>
 
@@ -56,7 +56,7 @@ const props = defineProps({
 	isHome: {
 		type: Boolean,
 		required: false,
-		default: 'true'
+		default: true
 	}
 })
 
@@ -204,4 +204,9 @@ const showToast = (tips: string) => {
 		}
 	}
 }
+
+
+
+
+
 </style>

@@ -1,26 +1,8 @@
-<!-- <template>
-	<view class="page">
-		
-	</view>
+<template>
+
 </template>
 
-<script lang="ts">
-  import Vue from 'vue';
-
-	export default Vue.extend({
-		data() {
-			return {
-				networks: [
-					{
-						tag: 'BIT',
-						title: 'BIT',
-						img: require(''),
-					},
-				],
-			}
-		},
-	});
+<script setup lang="ts">
 </script>
 
-<style lang="scss" scoped>
-</style> -->
+<style lang="scss" scoped></style>

@@ -11,21 +11,40 @@
 		"jsx": "preserve",
 		"baseUrl": "./",
 		"paths": {
-			"@": ["src"],
-			"@/*": ["src/*"]
+			"@": [
+				"src"
+			],
+			"@/*": [
+				"src/*"
+			],
+			"crypto": [
+				"node_modules/crypto-browserify"
+			],
 		},
-		"lib": ["esnext", "dom"],
-		"types": ["@dcloudio/types", "node", "vite/client","vue"],
+		"lib": [
+			"esnext",
+			"dom"
+		],
+		"types": [
+			"@dcloudio/types",
+			"node",
+			"vite/client",
+			"vue"
+		],
 		"plugins": [
 			{
 				"name": "typescript-plugin-css-modules"
 			}
 		]
 	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./src/**/*"]
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"./src/**/*"
+	]
 }
-
-
 // {
 // 	"compilerOptions": {
 // 	  "target": "ESNext",
@@ -48,4 +67,3 @@
 // 	},
 // 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 //   }
-  

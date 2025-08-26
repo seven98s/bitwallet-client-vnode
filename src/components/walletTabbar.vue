@@ -4,9 +4,9 @@
 		<view class="tabbarList">
 			<view class="tabbarItem" v-for="(item, index) in list" @click="tabbarSwitch(index, item.pagePath)"
 				:key="index">
-				<image :src="currentIndex == index ? item.selectedIconPath : item.iconPath" mode="widthFix"
+				<image :src="props.currentIndex == index ? item.selectedIconPath : item.iconPath" mode="widthFix"
 					class="tabbarIcon"></image>
-				<view class="tabbText" :class="currentIndex == index ? 'activedText' : ''">
+				<view class="tabbText" :class="props.currentIndex == index ? 'activedText' : ''">
 					{{ item.text }}
 				</view>
 			</view>
@@ -15,11 +15,16 @@
 </template>
 
 <script setup lang="ts">
+import home from "@/static/newUI3/tabbar/home.png";
+import homeActive from "@/static/newUI3/tabbar/homeActive.png";
+import node from "@/static/newUI3/tabbar/node.png";
+import nodeActive from "@/static/newUI3/tabbar/nodeActive.png";
 
+import explore from "@/static/newUI3/tabbar/explore.png";
+import exploreActive from "@/static/newUI3/tabbar/exploreActive.png";
+import my from "@/static/newUI3/tabbar/my.png";
+import myActive from "@/static/newUI3/tabbar/myActive.png";
 
-interface TabbarProps {
-	currentIndex?: number
-}
 
 
 const props = defineProps({
@@ -34,26 +39,26 @@ const list = ref([
 	{
 		text: "首页",
 		pagePath: "/pages/home/index",
-		iconPath: require('@/static/newUI3/tabbar/home.png'),
-		selectedIconPath: require('@/static/newUI3/tabbar/homeActive.png')
+		iconPath: home,
+		selectedIconPath: homeActive
 	},
 	{
 		text: "节点",
 		pagePath: "/pages/node/index",
-		iconPath: require('@/static/newUI3/tabbar/node.png'),
-		selectedIconPath: require('@/static/newUI3/tabbar/nodeActive.png')
+		iconPath: node,
+		selectedIconPath: nodeActive
 	},
 	{
 		text: "探索",
 		pagePath: "/pages/explore/index",
-		iconPath: require('@/static/newUI3/tabbar/explore.png'),
-		selectedIconPath: require('@/static/newUI3/tabbar/exploreActive.png')
+		iconPath: explore,
+		selectedIconPath: exploreActive
 	},
 	{
 		text: "我的",
 		pagePath: "/pages/my/index",
-		iconPath: require('@/static/newUI3/tabbar/my.png'),
-		selectedIconPath: require('@/static/newUI3/tabbar/myActive.png')
+		iconPath: my,
+		selectedIconPath: myActive
 	}
 ])
 

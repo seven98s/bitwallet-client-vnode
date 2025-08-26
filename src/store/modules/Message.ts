@@ -16,6 +16,7 @@ interface PasswordPopConfig {
     show: boolean
     title: string
     password: string
+    confirm?: (data: string) => void
 }
 
 

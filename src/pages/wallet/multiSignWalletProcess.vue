@@ -25,27 +25,33 @@
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 
+import process1 from "@/static/newUI3/index/process1.png";
+import process2 from "@/static/newUI3/index/process2.png";
+import process3 from "@/static/newUI3/index/process3.png";
+import process4 from "@/static/newUI3/index/process4.png";
+import process5 from "@/static/newUI3/index/process5.png";
+
 
 
 const tips = ref([
   {
-    icon: require('@/static/newUI3/index/process1.png'),
+    icon: process1,
     describe: '选择需要形成多签的钱包，然后点创建钱包-创建多签钱包',
   },
   {
-    icon: require('@/static/newUI3/index/process2.png'),
+    icon: process2,
     describe: '依次输入控制授权钱包地址',
   },
   {
-    icon: require('@/static/newUI3/index/process3.png'),
+    icon: process3,
     describe: '输入阈值(阈值代表需要多少数量的授权钱包确认)',
   },
   {
-    icon: require('@/static/newUI3/index/process4.png'),
+    icon: process4,
     describe: '确认形成多签的钱包中有足够的BIT作为GAS费，支付创建多签钱包的链上费用',
   },
   {
-    icon: require('@/static/newUI3/index/process5.png'),
+    icon: process5,
     describe: '创建成功，开始使用',
   },
 ])

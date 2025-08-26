@@ -25,16 +25,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { onLoad } from '@dcloudio/uni-app';
+import createWallet from "@/static/wallet/createWay/create.png";
+import multiSignWalletProcess from "@/static/wallet/createWay/multiSign.png"
 
 const importWays = ref([
   {
-    icon: require("@/static/wallet/createWay/create.png"),
+    icon: createWallet,
     title: "创建钱包",
     describe: "免费创建钱包",
     gotoPage: "./createWallet",
   },
   {
-    icon: require("@/static/wallet/createWay/multiSign.png"),
+    icon: multiSignWalletProcess,
     title: "多签钱包",
     describe: "创建多签钱包需要支付链上矿工费",
     gotoPage: "./multiSignWalletProcess",

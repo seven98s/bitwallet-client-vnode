@@ -31,7 +31,47 @@ const instance = getCurrentInstance();
 onLoad((query: any) => {
 	urlParam.value = query.url;
 });
+// 初始化 WebView 注入
+async function init() {
+	return new Promise(async (resolve) => {
+		const bitweb = BitInstance.bitweb;
+		const currentWebview = (instance?.proxy as any).$scope.$getAppWebview();
+		const win: any = currentWebview.children()[0];
+		webViewObj.value = win;
 
+		const accountBase58 = WalletData.account.address;
+		const accountHex = bitweb.address.toHex(WalletData.account.address);
+
+		win.show();
+
+		win.evalJS(`
+		window.chainId = ${chainId};
+		window.bitwebTemp.defaultAddress.base58='${accountBase58.toString()}';
+		window.bitwebTemp.defaultAddress.hex='${accountHex.toString()}';
+		
+		window.bitwebTemp.trx.sign = function(transaction, privateKey, useBitHeader, multisig) {
+		  return new Promise(function(resolve, reject) {
+			uni.postMessage({
+			  data: {
+				type: 'SIGN',
+				transaction: transaction,
+				privateKey: privateKey,
+				useBitHeader: useBitHeader,
+				multisig: multisig
+			  }
+			})
+			document.addEventListener("getAppSignMsg", (e) => {
+			  resolve(window.signStr)
+			}, { once: true })
+		  });
+		}
+		
+		window.chain = 'BIT';
+	  `);
+
+		resolve(true);
+	});
+}
 // 页面初始化完成
 onReady(() => {
 	// #ifdef APP-PLUS
@@ -89,47 +129,7 @@ async function handleMessage(e: any) {
 	}
 }
 
-// 初始化 WebView 注入
-async function init() {
-	return new Promise(async (resolve) => {
-		const bitweb = BitInstance.bitweb;
-		const currentWebview = (instance?.proxy as any).$scope.$getAppWebview();
-		const win: any = currentWebview.children()[0];
-		webViewObj.value = win;
 
-		const accountBase58 = WalletData.account.address;
-		const accountHex = bitweb.address.toHex(WalletData.account.address);
-
-		win.show();
-
-		win.evalJS(`
-		window.chainId = ${chainId};
-		window.bitwebTemp.defaultAddress.base58='${accountBase58.toString()}';
-		window.bitwebTemp.defaultAddress.hex='${accountHex.toString()}';
-		
-		window.bitwebTemp.trx.sign = function(transaction, privateKey, useBitHeader, multisig) {
-		  return new Promise(function(resolve, reject) {
-			uni.postMessage({
-			  data: {
-				type: 'SIGN',
-				transaction: transaction,
-				privateKey: privateKey,
-				useBitHeader: useBitHeader,
-				multisig: multisig
-			  }
-			})
-			document.addEventListener("getAppSignMsg", (e) => {
-			  resolve(window.signStr)
-			}, { once: true })
-		  });
-		}
-		
-		window.chain = 'BIT';
-	  `);
-
-		resolve(true);
-	});
-}
 </script>
 
 <style lang="scss" scoped>
