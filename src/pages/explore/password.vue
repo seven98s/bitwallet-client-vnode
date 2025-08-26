@@ -1,5 +1,5 @@
 <template>
-	<view>my</view>
+	password
 </template>
 
 <script setup lang="ts">

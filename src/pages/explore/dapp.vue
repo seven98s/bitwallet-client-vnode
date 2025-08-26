@@ -105,7 +105,7 @@ async function handleMessage(e: any) {
 						console.log('解密成功', privateKey)
 					} catch (e) {
 						console.log(e)
-						
+
 						UniUtil.toastError('请输入正确密码');
 					}
 				}

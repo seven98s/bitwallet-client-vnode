@@ -1,4 +1,4 @@
- <template>
+<template>
 	<view class="home-page" :style="{ paddingTop: statusBarHeight + 'px' }">
 		<!-- 自定义导航栏 -->
 		<navigationBar searchKeyWord='BIT节点计划'></navigationBar>
@@ -181,30 +181,6 @@ const statusBarHeight = ref(0);
 
 const bitPrice = ref('');
 
-
-onMounted(async () => {
-	dappList.value = [
-		{ dappName: "参与节点", icon: joinNode, jumpType: 0, jumpUrl: '/pages/node/index' },
-		{ dappName: "DApp浏览器", icon: dappBrowser, jumpType: 0, jumpUrl: '/pages/explore/index' },
-		{ dappName: "一键孵化", icon: incubate, jumpType: 1, jumpUrl: '' },
-		{ dappName: "跨链转币", icon: transferAccounts, jumpType: 1, jumpUrl: 'http://crosschain.bitnetworkbc.com' },
-	];
-
-	// 设置账户地址
-	const { address } = WalletData.account;
-	query.account = address;
-
-	// 获取状态栏高度
-	const systemInfo = uni.getSystemInfoSync();
-	statusBarHeight.value = (systemInfo.statusBarHeight || 0) + 15;
-
-	// 初始化数据
-	await init();
-	getAssetsTypeList();
-});
-
-
-
 const init = async () => {
 	UniUtil.loadShow();
 	getAccount();
@@ -236,10 +212,17 @@ const init = async () => {
 		UniUtil.loadHide();
 	}
 
+};
+
+interface DappItem {
+	dappName: string,
+	icon: any,
+	jumpType: number,//0:跳转app内部页面跳转，1:跳转外部，webservice
+	jumpUrl: string,
 }
+const dappList = ref<DappItem[]>([])
 
-
-
+const assetsTypeList = ref<any[]>([]);
 
 const getAssetsTypeList = async () => {
 	try {
@@ -254,7 +237,8 @@ const getAssetsTypeList = async () => {
 		UniUtil.toastError('加载失败，请刷新重试');
 	}
 
-}
+};
+
 
 
 
@@ -265,8 +249,8 @@ watch(
 			await init()
 		}
 	},
-	{deep: true}
-	
+	{ deep: true }
+
 )
 
 
@@ -286,13 +270,7 @@ const param = reactive({
 
 
 
-interface DappItem {
-	dappName: string,
-	icon: any,
-	jumpType: number,//0:跳转app内部页面跳转，1:跳转外部，webservice
-	jumpUrl: string,
-}
-const dappList = ref<DappItem[]>([])
+
 const filteredDappList = computed(() => {
 	return dappList.value.filter((_, index) => index < 4 || isShowMoreDapp.value);
 });
@@ -424,7 +402,7 @@ const handleAssetTabClick = async (assetActive: string, moduleId: number) => {
 
 
 
-const assetsTypeList = ref<any[]>([]);
+
 
 const getAssets2 = async () => {
 	try {
@@ -529,9 +507,13 @@ const handleContentClick = (item: AssetItem, e: any) => {
 };
 
 import bit from "@/static/token/icon/bit.png"
+import { onLoad } from '@dcloudio/uni-app';
 const handleImageError = (index: number) => {
-	showAssets[index].icon = bit;
+  if (showAssets.value[index]) {
+    showAssets.value[index].icon = bit;
+  }
 }
+
 
 const walletPopupshow = (show: boolean) => {
 	param.show = show;
@@ -542,7 +524,30 @@ const getAccount = () => {
 	wallet.name = account.name;
 	wallet.address = account.address;
 	wallet.type = account.type;
-}
+};
+
+
+onLoad(async () => {
+	dappList.value = [
+		{ dappName: "参与节点", icon: joinNode, jumpType: 0, jumpUrl: '/pages/node/index' },
+		{ dappName: "DApp浏览器", icon: dappBrowser, jumpType: 0, jumpUrl: '/pages/explore/index' },
+		{ dappName: "一键孵化", icon: incubate, jumpType: 1, jumpUrl: '' },
+		{ dappName: "跨链转币", icon: transferAccounts, jumpType: 1, jumpUrl: 'http://crosschain.bitnetworkbc.com' },
+	];
+
+	// 设置账户地址
+	const { address } = WalletData.account;
+	query.account = address;
+
+	// 获取状态栏高度
+	const systemInfo = uni.getSystemInfoSync();
+	statusBarHeight.value = (systemInfo.statusBarHeight || 0) + 15;
+
+	// 初始化数据
+	await init();
+	getAssetsTypeList();
+});
+
 </script>
 
 <style lang="scss" scoped>
